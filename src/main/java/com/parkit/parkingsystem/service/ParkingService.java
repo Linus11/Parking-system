@@ -33,11 +33,12 @@ public class ParkingService {
 			ParkingSpot parkingSpot = getNextParkingNumberIfAvailable();
 			if (parkingSpot != null && parkingSpot.getId() > 0) {
 				String vehicleRegNumber = getVehichleRegNumber();
+
 				parkingSpot.setAvailable(false);
 				parkingSpotDAO.updateParking(parkingSpot);// allot this parking
 															// space and mark
-															// it's availability
-															// as false
+				// it's
+				// availability
 
 				Date inTime = new Date();
 				Ticket ticket = new Ticket();
@@ -46,10 +47,11 @@ public class ParkingService {
 				// ticket.setId(ticketID);
 				ticket.setParkingSpot(parkingSpot);
 				ticket.setVehicleRegNumber(vehicleRegNumber);
-				ticket.setPrice(0); // on ne paie pas à l'entrée
+				ticket.setPrice(0);
 				ticket.setInTime(inTime);
 				ticket.setOutTime(null);
 				ticketDAO.saveTicket(ticket);
+
 				System.out.println("Generated Ticket and saved in DB");
 				System.out.println("Please park your vehicle in spot number:" + parkingSpot.getId());
 				System.out.println("Recorded in-time for vehicle number:" + vehicleRegNumber + " is:" + inTime);
@@ -110,15 +112,22 @@ public class ParkingService {
 
 	public void processExitingVehicle() {
 		try {
-			String vehicleRegNumber = getVehichleRegNumber();
-			Ticket ticket = ticketDAO.getTicket(vehicleRegNumber);
+			String vehicleRegNumber = getVehichleRegNumber(); // saisi par
+																// l'utilisateur
+			Ticket ticket = ticketDAO.getTicket(vehicleRegNumber); // comparé à
+																	// celui
+																	// dans la
+																	// base
 			Date outTime = new Date();
 			ticket.setOutTime(outTime);
+
 			fareCalculatorService.calculateFare(ticket);
+
 			if (ticketDAO.updateTicket(ticket)) {
 				ParkingSpot parkingSpot = ticket.getParkingSpot();
 				parkingSpot.setAvailable(true);
 				parkingSpotDAO.updateParking(parkingSpot);
+				System.out.println("le numéro d'id est " + ticket.getId());
 				System.out.println("Please pay the parking fare:" + ticket.getPrice());
 				System.out.println(
 						"Recorded out-time for vehicle number:" + ticket.getVehicleRegNumber() + " is:" + outTime);
@@ -128,5 +137,7 @@ public class ParkingService {
 		} catch (Exception e) {
 			logger.error("Unable to process exiting vehicle", e);
 		}
+
 	}
+
 }
