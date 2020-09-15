@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Parking System
 A command line app for managing the parking system. 
 This app uses Java to run and stores the data in Mysql DB.
@@ -47,3 +48,6 @@ The app has unit tests and integration tests written. More of these need to be a
 To run the tests from maven, go to the folder that contains the pom.xml file and execute the below command.
 
 `mvn test`
+=======
+# Parking-system
+>>>>>>> 6bacd8c7024b1b8af5257d34f97081b3466945a7
