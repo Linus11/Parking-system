@@ -30,10 +30,7 @@ public class ParkingService {
 
 	public void processIncomingVehicle() {
 		try {
-<<<<<<< HEAD
-			ParkingSpot parkingSpot = getNextParkingNumberIfAvailable(); // Place
-																			// de
-																			// parking
+			ParkingSpot parkingSpot = getNextParkingNumberIfAvailable();
 			if (parkingSpot != null && parkingSpot.getId() > 0) {
 				String vehicleRegNumber = getVehichleRegNumber();
 				parkingSpot.setAvailable(false);
@@ -41,17 +38,6 @@ public class ParkingService {
 															// space and mark
 															// it's availability
 															// as false
-=======
-			ParkingSpot parkingSpot = getNextParkingNumberIfAvailable();
-			if (parkingSpot != null && parkingSpot.getId() > 0) {
-				String vehicleRegNumber = getVehichleRegNumber();
-
-				parkingSpot.setAvailable(false);
-				parkingSpotDAO.updateParking(parkingSpot);// allot this parking
-															// space and mark
-				// it's
-				// availability
->>>>>>> 42e1948297fe16c7b78afe652c43f0cee25bcbc6
 
 				Date inTime = new Date();
 				Ticket ticket = new Ticket();
@@ -64,10 +50,6 @@ public class ParkingService {
 				ticket.setInTime(inTime);
 				ticket.setOutTime(null);
 				ticketDAO.saveTicket(ticket);
-<<<<<<< HEAD
-=======
-
->>>>>>> 42e1948297fe16c7b78afe652c43f0cee25bcbc6
 				System.out.println("Generated Ticket and saved in DB");
 				System.out.println("Please park your vehicle in spot number:" + parkingSpot.getId());
 				System.out.println("Recorded in-time for vehicle number:" + vehicleRegNumber + " is:" + inTime);
@@ -77,17 +59,12 @@ public class ParkingService {
 		}
 	}
 
-<<<<<<< HEAD
-=======
-	// saisie du clavier numéro du véhicule
->>>>>>> 42e1948297fe16c7b78afe652c43f0cee25bcbc6
 	private String getVehichleRegNumber() throws Exception {
 		System.out.println("Please type the vehicle registration number and press enter key");
 		return inputReaderUtil.readVehicleRegistrationNumber();
 	}
 
 	public ParkingSpot getNextParkingNumberIfAvailable() {
-<<<<<<< HEAD
 		int parkingNumber = 0;
 		ParkingSpot parkingSpot = null;
 		try {
@@ -95,20 +72,6 @@ public class ParkingService {
 			parkingNumber = parkingSpotDAO.getNextAvailableSlot(parkingType);
 			if (parkingNumber > 0) {
 				parkingSpot = new ParkingSpot(parkingNumber, parkingType, true);
-=======
-
-		int parkingNumber = 0;
-		ParkingSpot parkingSpot = null;
-
-		try {
-			ParkingType parkingType = getVehichleType(); // vélo ou voiture
-			parkingNumber = parkingSpotDAO.getNextAvailableSlot(parkingType);
-
-			if (parkingNumber > 0) {
-
-				parkingSpot = new ParkingSpot(parkingNumber, parkingType, true);
-
->>>>>>> 42e1948297fe16c7b78afe652c43f0cee25bcbc6
 			} else {
 				throw new Exception("Error fetching parking number from DB. Parking slots might be full");
 			}
@@ -141,33 +104,15 @@ public class ParkingService {
 
 	public void processExitingVehicle() {
 		try {
-<<<<<<< HEAD
 			String vehicleRegNumber = getVehichleRegNumber();
 			Ticket ticket = ticketDAO.getTicket(vehicleRegNumber);
 			Date outTime = new Date();
 			ticket.setOutTime(outTime);
 			fareCalculatorService.calculateFare(ticket);
-=======
-			String vehicleRegNumber = getVehichleRegNumber(); // saisi par
-																// l'utilisateur
-			Ticket ticket = ticketDAO.getTicket(vehicleRegNumber); // comparé à
-																	// celui
-																	// dans la
-																	// base
-			Date outTime = new Date();
-			ticket.setOutTime(outTime);
-
-			fareCalculatorService.calculateFare(ticket);
-
->>>>>>> 42e1948297fe16c7b78afe652c43f0cee25bcbc6
 			if (ticketDAO.updateTicket(ticket)) {
 				ParkingSpot parkingSpot = ticket.getParkingSpot();
 				parkingSpot.setAvailable(true);
 				parkingSpotDAO.updateParking(parkingSpot);
-<<<<<<< HEAD
-=======
-				System.out.println("le numéro d'id est " + ticket.getId());
->>>>>>> 42e1948297fe16c7b78afe652c43f0cee25bcbc6
 				System.out.println("Please pay the parking fare:" + ticket.getPrice());
 				System.out.println(
 						"Recorded out-time for vehicle number:" + ticket.getVehicleRegNumber() + " is:" + outTime);
@@ -177,11 +122,5 @@ public class ParkingService {
 		} catch (Exception e) {
 			logger.error("Unable to process exiting vehicle", e);
 		}
-<<<<<<< HEAD
 	}
-=======
-
-	}
-
->>>>>>> 42e1948297fe16c7b78afe652c43f0cee25bcbc6
 }

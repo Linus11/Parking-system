@@ -16,13 +16,14 @@ public class DataBaseConfig {
 	public Connection getConnection() throws ClassNotFoundException, SQLException {
 		logger.info("Create DB connection");
 		Class.forName("com.mysql.cj.jdbc.Driver");
-<<<<<<< HEAD
-		return DriverManager.getConnection("jdbc:mysql://localhost:3306/prod", "root", "root");
-=======
+
+		// return
+		// DriverManager.getConnection("jdbc:mysql://localhost:3306/prod",
+		// "root", "root");
+
 		return DriverManager.getConnection(
 				"jdbc:mysql://localhost:3306/prod?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC", "root",
 				"root");
->>>>>>> 42e1948297fe16c7b78afe652c43f0cee25bcbc6
 	}
 
 	public void closeConnection(Connection con) {

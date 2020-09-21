@@ -92,28 +92,28 @@ public class TicketDAO {
 		return false;
 	}
 
-	public int getNumber_History(String vehicleRegNumber) {
-		int countRow = 0;
-		Connection con = null;
-
-		try {
-			con = dataBaseConfig.getConnection();
-			PreparedStatement ps = con.prepareStatement(DBConstants.GET_HISTORY);
-			// ID, PARKING_NUMBER, VEHICLE_REG_NUMBER, PRICE, IN_TIME, OUT_TIME)
-			ps.setString(1, vehicleRegNumber);
-			ResultSet rs = ps.executeQuery();
-			if (rs.next()) {
-
-				countRow = rs.getInt(0);
-
-			}
-			dataBaseConfig.closeResultSet(rs);
-			dataBaseConfig.closePreparedStatement(ps);
-		} catch (Exception ex) {
-			logger.error("Error fetching next available slot", ex);
-		} finally {
-			dataBaseConfig.closeConnection(con);
-			return countRow;
-		}
-	}
+//	public int getNumber_History(String vehicleRegNumber) {
+//		int countRow = 0;
+//		Connection con = null;
+//
+//		try {
+//			con = dataBaseConfig.getConnection();
+//			//PreparedStatement ps = con.prepareStatement(DBConstants.GET_HISTORY);
+//			// ID, PARKING_NUMBER, VEHICLE_REG_NUMBER, PRICE, IN_TIME, OUT_TIME)
+//			ps.setString(1, vehicleRegNumber);
+//			ResultSet rs = ps.executeQuery();
+//			if (rs.next()) {
+//
+//				countRow = rs.getInt(0);
+//
+//			}
+//			dataBaseConfig.closeResultSet(rs);
+//			dataBaseConfig.closePreparedStatement(ps);
+//		} catch (Exception ex) {
+//			logger.error("Error fetching next available slot", ex);
+//		} finally {
+//			dataBaseConfig.closeConnection(con);
+//			return countRow;
+//		}
+//	}
 }

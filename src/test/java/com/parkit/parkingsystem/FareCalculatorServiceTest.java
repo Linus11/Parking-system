@@ -3,6 +3,7 @@ package com.parkit.parkingsystem;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import org.junit.jupiter.api.BeforeAll;
@@ -194,20 +195,24 @@ public class FareCalculatorServiceTest {
 		ticket.setInTime(inTime);
 		ticket.setOutTime(outTime);
 		ticket.setParkingSpot(parkingSpot);
+		ticket.setPrice(0); // doit-il chercher cette valeur de la classe
+							// FareCalculatorService ?
 		fareCalculatorService.calculateFare(ticket);
+
 		assertEquals((0), ticket.getPrice());
 	}
 
 	@Test
 	public void calculateFareCarWithLessThanThirtyMinutesFreeParkingTime() {
 		Date inTime = new Date();
-		inTime.setTime(System.currentTimeMillis() - (30 * 60 * 1000));// 30
-																		// minutes
-																		// parking
-																		// time
-																		// should
-																		// give
-																		// free..
+		int localDate = LocalDateTime.now().getMinute();
+		inTime.setTime(localDate - (30 * 60));// 30
+												// minutes
+												// parking
+												// time
+												// should
+												// give
+												// free..
 		Date outTime = new Date();
 		ParkingSpot parkingSpot = new ParkingSpot(1, ParkingType.CAR, false);
 
@@ -217,5 +222,4 @@ public class FareCalculatorServiceTest {
 		fareCalculatorService.calculateFare(ticket);
 		assertEquals((0), ticket.getPrice());
 	}
-
 }
